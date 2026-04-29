@@ -329,7 +329,7 @@ local CurrentCamera: Camera? = workspace.CurrentCamera;
 
 local Compkiller = {
 	Version = '1.9',
-	Logo = "rbxassetid://120245531583106",
+	Logo = "rbxassetid://80837157593777",
 	Windows = {},
 	Scale = {
 		Window = UDim2.new(0, 456,0, 499),
@@ -9413,7 +9413,7 @@ function Compkiller:Loader(IconId,Duration)
 	Icon.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Icon.Size = UDim2.new(0, 750, 0, 750)
 	Icon.ZIndex = 100
-	Icon.Image = IconId or "rbxassetid://120245531583106"
+	Icon.Image = IconId or "rbxassetid://80837157593777"
 	Icon.ImageTransparency = 1
 
 	Vignette.Name = Compkiller:_RandomString()
