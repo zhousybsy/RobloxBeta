@@ -9958,7 +9958,7 @@ Compkiller:Loader("rbxassetid://78342669010819", 2.5).yield()
 local Window = Compkiller.new({
 	Name = "Sybsy 制作",
 	Keybind = "LeftAlt",
-	Logo = "rbxassetid://78342669010819",
+	Logo = "rbxassetid://80837157593777",
 	Scale = Compkiller.Scale.Window,
 	TextSize = 15,
 	Theme = {
@@ -9975,15 +9975,15 @@ Notifier.new({
 	Title = "Teraphy Hub",
 	Content = "欢迎！按 左Alt 打开/关闭菜单。",
 	Duration = 5,
-	Icon = "rbxassetid://78342669010819",
+	Icon = "rbxassetid://80837157593777",
 })
 
 -- Patchedval Notification
 Notifier.new({
 	Title = "提示",
-	Content = "你好，我是 patchedval，在这里留了条通知",
+	Content = "你好，我是 Sybsy，在这里留了条通知",
 	Duration = 4,
-	Icon = "rbxassetid://78342669010819",
+	Icon = "rbxassetid://80837157593777",
 })
 do
 	local Watermark = Window:Watermark()
