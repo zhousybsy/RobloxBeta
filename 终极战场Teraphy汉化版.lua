@@ -9956,7 +9956,7 @@ local ConfigManager = Compkiller:ConfigManager({
 Compkiller:Loader("rbxassetid://78342669010819", 2.5).yield()
 
 local Window = Compkiller.new({
-	Name = "Teraphy Hub",
+	Name = "Sybsy 制作",
 	Keybind = "LeftAlt",
 	Logo = "rbxassetid://78342669010819",
 	Scale = Compkiller.Scale.Window,
