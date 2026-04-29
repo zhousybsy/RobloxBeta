@@ -7705,7 +7705,7 @@ function Compkiller.new(Config : Window)
 						WindowArgs.Notify.new({
 							Title = "配置",
 							Icon = Compkiller:_GetIcon(Config.Logo),
-							Content = "Load config \""..v.Name.."\""
+							Content = "加载配置 \""..v.Name.."\""
 						})
 
 						Configuration.Config:LoadConfig(v.Name);
@@ -7715,7 +7715,7 @@ function Compkiller.new(Config : Window)
 						WindowArgs.Notify.new({
 							Title = "配置",
 							Icon = Compkiller:_GetIcon(Config.Logo),
-							Content = "Save config \""..v.Name.."\""
+							Content = "保存配置 \""..v.Name.."\""
 						})
 
 						Button:SetInfo(v.Info.Author,v.Name);
@@ -7730,7 +7730,7 @@ function Compkiller.new(Config : Window)
 						WindowArgs.Notify.new({
 							Title = "配置",
 							Icon = Compkiller:_GetIcon(Config.Logo),
-							Content = "Delete config \""..v.Name.."\""
+							Content = "删除配置 \""..v.Name.."\""
 						})
 
 						Configuration.Config:DeleteConfig(v.Name)
@@ -7742,7 +7742,7 @@ function Compkiller.new(Config : Window)
 						WindowArgs.Notify.new({
 							Title = "配置",
 							Icon = Compkiller:_GetIcon(Config.Logo),
-							Content = (newState and "Enabled" or "Disabled") .. " Auto Load for \""..v.Name.."\""
+							Content = (newState and "已启用" or "已禁用") .. " 自动加载：\""..v.Name.."\""
 						})
 						Refresh();
 					end
@@ -9295,7 +9295,7 @@ function Compkiller:ConfigManager(ConfigManager: ConfigManager) : ConfigFunction
 			notify.new({
 				Title = "配置",
 				Icon = Compkiller:_GetIcon('settings'),
-				Content = "Delete config \""..ConfigName.."\""
+				Content = "删除配置 \""..ConfigName.."\""
 			})
 		end
 
@@ -9331,7 +9331,7 @@ function Compkiller:ConfigManager(ConfigManager: ConfigManager) : ConfigFunction
 				notify.new({
 					Title = "配置",
 					Icon = Compkiller:_GetIcon('settings'),
-					Content = "Load config \""..ConfigName.."\""
+					Content = "加载配置 \""..ConfigName.."\""
 				})
 			end
 
@@ -9848,7 +9848,7 @@ getgenv().TeraphyHubConfig = {
 	TrailColor = Color3.fromRGB(255, 50, 50),
 	RainbowTrail = false,
 	-- Utility
-	OrbitTarget = { "closest" },
+	OrbitTarget = { "最近" },
 	OrbitSpeed = 5,
 	OrbitRadius = 10,
 	OrbitHeight = 0,
@@ -9858,7 +9858,7 @@ getgenv().TeraphyHubConfig = {
 	NanamiKeybind = { "NIL" },
 	MobKeybind = { "NIL" },
 	-- Exploits
-	LoopGotoPlayer = { "closest" },
+	LoopGotoPlayer = { "最近" },
 	LoopGotoKeybind = { "NIL" },
 	QuickLoopGotoKeybind = { "NIL" },
 	LoopGotoFollowSelected = false,
@@ -9882,7 +9882,7 @@ getgenv().TeraphyHubConfig = {
 	-- Combat
 	HitboxToggle = false,
 	HitboxLegitify = false,
-	HitboxMethod = { "Override" },
+	HitboxMethod = { "覆盖" },
 	HitboxX = 40,
 	HitboxY = 40,
 	HitboxZ = 40,
@@ -9891,25 +9891,25 @@ getgenv().TeraphyHubConfig = {
 	EnhancerMultiplier = 0,
 	InstantKill = false,
 	InstantKillKeybind = "NIL",
-	InstantKillMode = { "Manual" },
-	InstantKillTargetSelection = { "Closest" },
+	InstantKillMode = { "手动" },
+	InstantKillTargetSelection = { "最近" },
 	InstantKillIgnoreFriends = false,
 	ShowRangeCircle = false,
 	RangeCircleColor = Color3.fromRGB(255, 0, 0),
 	RangeRadius = 67.5,
 	KillFarming = false,
 	WallCombo = false,
-	WallComboMode = { "Manual" },
+	WallComboMode = { "手动" },
 	WallComboKeybind = { "NIL" },
 	WallComboDelay = 0.5,
-	WallComboTargetSelection = { "Closest" },
+	WallComboTargetSelection = { "最近" },
 	WallComboIgnoreFriends = false,
 	KillEmoteEnabled = false,
 	KillEmoteSelection = nil,
-	KillEmoteMode = { "Selected" },
-	KillEmoteType = { "Manual" },
+	KillEmoteMode = { "指定" },
+	KillEmoteType = { "手动" },
 	KillEmoteDelay = 0.05,
-	KillEmoteTargetSelection = { "Closest" },
+	KillEmoteTargetSelection = { "最近" },
 	KillEmoteIgnoreFriends = false,
 	EmoteKeybind = { "NIL" },
 	DashPatcherToggle = false,
@@ -9973,15 +9973,15 @@ local Window = Compkiller.new({
 -- Welcome Notification
 Notifier.new({
 	Title = "Teraphy Hub",
-	Content = "Welcome! Press Left Alt to open/close the menu.",
+	Content = "欢迎！按 左Alt 打开/关闭菜单。",
 	Duration = 5,
 	Icon = "rbxassetid://78342669010819",
 })
 
 -- Patchedval Notification
 Notifier.new({
-	Title = "Info",
-	Content = "Hi i'm patchedval and i put this cool notification here",
+	Title = "提示",
+	Content = "你好，我是 patchedval，在这里留了条通知",
 	Duration = 4,
 	Icon = "rbxassetid://78342669010819",
 })
@@ -10015,16 +10015,16 @@ do
 		Text = Compkiller.Version,
 	})
 end
-local DualTab1 = Window:DrawContainerTab({ Name = "Combat", Icon = "skull", EnableScrolling = true })
-local DualTab2 = Window:DrawContainerTab({ Name = "Visuals", Icon = "eye", EnableScrolling = true })
+local DualTab1 = Window:DrawContainerTab({ Name = "战斗", Icon = "skull", EnableScrolling = true })
+local DualTab2 = Window:DrawContainerTab({ Name = "视觉", Icon = "eye", EnableScrolling = true })
 local DualTab4 = Window:DrawContainerTab({ Name = "功能", Icon = "triangle", EnableScrolling = true })
 local DualTab5 = Window:DrawContainerTab({ Name = "实用工具", Icon = "box", EnableScrolling = true })
 do
 	local MovementTab = Window:DrawTab({ Name = "移动", Icon = "contact", Type = "Double", EnableScrolling = true })
 	local MovementLeftSection =
-		MovementTab:DrawSection({ Name = "Movement Controls", Position = "left", EnableScrolling = true })
+		MovementTab:DrawSection({ Name = "移动控制", Position = "left", EnableScrolling = true })
 	local MovementRightSection =
-		MovementTab:DrawSection({ Name = "Advanced Movement", Position = "right", EnableScrolling = true })
+		MovementTab:DrawSection({ Name = "高级移动", Position = "right", EnableScrolling = true })
 
 	local function applyMovementSetting(settingName, value)
 		local success, err = pcall(function()
@@ -10048,11 +10048,11 @@ do
 			showNotification("移动", ("%s: %s"):format(settingName, tostring(value)))
 		end)
 		if not success then
-			showNotification("移动", "Failed to set " .. settingName .. ": " .. tostring(err))
+			showNotification("移动", "设置失败 " .. settingName .. "：" .. tostring(err))
 		end
 	end
 	MovementLeftSection:AddSlider({
-		Name = "Dash Speed",
+		Name = "冲刺速度",
 		Min = 1,
 		Max = 300,
 		Default = Cfg.DashSpeed,
@@ -10064,7 +10064,7 @@ do
 		end,
 	})
 	MovementLeftSection:AddToggle({
-		Name = "No Dash Cooldown",
+		Name = "无冲刺冷却",
 		Flag = "NoDashCooldown",
 		Default = Cfg.NoDashCooldown,
 		Callback = function(value)
@@ -10082,7 +10082,7 @@ do
 		end,
 	})
 	MovementLeftSection:AddToggle({
-		Name = "No Jump Fatigue",
+		Name = "无跳跃疲劳",
 		Flag = "NoJumpFatigue",
 		Default = Cfg.NoJumpFatigue,
 		Callback = function(value)
@@ -10091,7 +10091,7 @@ do
 		end,
 	})
 	MovementLeftSection:AddToggle({
-		Name = "No Stun On Miss",
+		Name = "未命中无硬直",
 		Flag = "NoStunOnMiss",
 		Default = Cfg.NoStunOnMiss,
 		Callback = function(value)
@@ -10100,7 +10100,7 @@ do
 		end,
 	})
 	MovementLeftSection:AddToggle({
-		Name = "No Slowdown",
+		Name = "无减速",
 		Flag = "NoSlowdown",
 		Default = Cfg.NoSlowdown,
 		Callback = function(value)
@@ -10170,14 +10170,14 @@ do
 		if state then
 			createPlatform()
 			disableCollisions()
-			showNotification("移动", "Fly And Noclip On")
+			showNotification("移动", "飞行与穿墙：开启")
 		else
 			if platform then
 				platform:Destroy()
 				platform = nil
 			end
 			restoreCollisions()
-			showNotification("移动", "Fly And Noclip Off")
+			showNotification("移动", "飞行与穿墙：关闭")
 		end
 	end
 	local function toggleSpeed(state)
@@ -10193,7 +10193,7 @@ do
 					rootPart.CFrame = rootPart.CFrame + moveDirection
 				end
 			end)
-			showNotification("移动", "Speed Hack On")
+			showNotification("移动", "速度加速：开启")
 		else
 			if speedConnection then
 				speedConnection:Disconnect()
@@ -10203,7 +10203,7 @@ do
 				humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying, false)
 				humanoid.PlatformStand = false
 			end
-			showNotification("移动", "Speed Hack Off")
+			showNotification("移动", "速度加速：关闭")
 		end
 	end
 	updateCharacterRefs()
@@ -10546,7 +10546,7 @@ do
 			Default = Cfg.CharacterMaterial,
 			Multi = false,
 			Flag = "CharacterMaterial",
-			Values = { "None", "Neon", "ForceField", "Glass", "Metal", "Wood", "Concrete", "Marble" },
+			Values = { "无", "霓虹", "力场", "玻璃", "金属", "木材", "混凝土", "大理石" },
 			Callback = function(value)
 				Cfg.CharacterMaterial = value
 				ReapplyMaterialEffect(LocalPlayer.Character)
@@ -10840,11 +10840,11 @@ do
 	end
 end
 do
-	local UtilityTab = DualTab5:DrawTab({ Name = "General", Type = "Double", EnableScrolling = true })
+	local UtilityTab = DualTab5:DrawTab({ Name = "通用", Type = "Double", EnableScrolling = true })
 	local UtilityLeftSection =
-		UtilityTab:DrawSection({ Name = "General Utils", Position = "left", EnableScrolling = true })
+		UtilityTab:DrawSection({ Name = "通用工具", Position = "left", EnableScrolling = true })
 	local UtilityRightSection = UtilityTab:DrawSection({
-		Name = "Istant Character Swap/ Server Utilities",
+		Name = "快速角色切换 / 服务器工具",
 		Position = "right",
 		EnableScrolling = true,
 	})
@@ -10862,7 +10862,7 @@ do
 		end
 		local function getOrbitTarget()
 			local name = (type(Cfg.OrbitTarget) == "table" and Cfg.OrbitTarget[1]) or Cfg.OrbitTarget
-			if name == nil or name == "" or name == "closest" then
+			if name == nil or name == "" or name == "最近" then
 				return findNearestPlayer()
 			end
 			local p = Players:FindFirstChild(name)
@@ -10938,15 +10938,15 @@ do
 					if target then
 						orbitEnabled = true
 						startOrbit()
-						showNotification("实用工具", "Orbit ON: " .. target.Name)
+						showNotification("实用工具", "轨道：开启 " .. target.Name)
 					else
 						isQuickOrbiting = false
-						showNotification("实用工具", "No valid orbit target")
+						showNotification("实用工具", "无有效轨道目标")
 					end
 				else
 					orbitEnabled = false
 					stopOrbit()
-					showNotification("实用工具", "Orbit OFF")
+					showNotification("实用工具", "轨道：关闭")
 				end
 			end
 			if
@@ -11008,7 +11008,7 @@ do
 			Flag = "UpdatePlayerList",
 			Callback = function()
 				local newPlayerNames = updatePlayerList()
-				showNotification("实用工具", "Player list updated (" .. #newPlayerNames .. " players)")
+				showNotification("实用工具", "玩家列表已更新（" .. #newPlayerNames .. " 人）")
 			end,
 		})
 		function findNearestPlayer()
@@ -11031,15 +11031,15 @@ do
 		end
 		local function getLoopGotoTarget()
 			local sel = LoopGotoCtrl and LoopGotoCtrl.SelectedName or nil
-			if sel == nil or sel == "closest" then
-				return findNearestPlayer(), "closest"
+			if sel == nil or sel == "最近" then
+				return findNearestPlayer(), "最近"
 			end
 			local p = Players:FindFirstChild(sel)
 			if p and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
 				return p, "selected"
 			end
 			local nearest = findNearestPlayer()
-			return nearest, nearest and "closest" or nil
+			return nearest, nearest and "最近" or nil
 		end
 		local function followTick()
 			if not LoopGotoCtrl.IsFollowing then
@@ -11076,7 +11076,7 @@ do
 				LoopGotoCtrl.Conn:Disconnect()
 				LoopGotoCtrl.Conn = nil
 			end
-			showNotification("实用工具", "Follow stopped")
+			showNotification("实用工具", "跟随已停止")
 		end
 		LoopGotoCtrl.StartWithTarget = function(target, mode)
 			if not target then
@@ -11089,7 +11089,7 @@ do
 				LoopGotoCtrl.Conn:Disconnect()
 			end
 			LoopGotoCtrl.Conn = RunService.Heartbeat:Connect(followTick)
-			showNotification("实用工具", "Following: " .. target.Name)
+			showNotification("实用工具", "正在跟随：" .. target.Name)
 		end
 		UserInputService.InputBegan:Connect(function(input, gp)
 			if gp then
@@ -11101,7 +11101,7 @@ do
 					if target then
 						LoopGotoCtrl.StartWithTarget(target, mode)
 					else
-						showNotification("功能", "No valid player target")
+						showNotification("功能", "无有效玩家目标")
 					end
 				else
 					LoopGotoCtrl.Stop()
@@ -11135,17 +11135,17 @@ do
 			end
 		end)
 		local function getOrbitPlayerNames()
-			local names = { "closest" }
+			local names = { "最近" }
 			for _, p in ipairs(Players:GetPlayers()) do
 				if p ~= LocalPlayer then
 					table.insert(names, p.Name)
 				end
 			end
 			table.sort(names, function(a, b)
-				if a == "closest" then
+				if a == "最近" then
 					return true
 				end
-				if b == "closest" then
+				if b == "最近" then
 					return false
 				end
 				return a < b
@@ -11154,7 +11154,7 @@ do
 		end
 
 		UtilityLeftSection:AddDropdown({
-			Name = "Orbit Target",
+			Name = "环绕目标",
 			Flag = "OrbitTarget",
 			Default = Cfg.OrbitTarget,
 			Values = getOrbitPlayerNames(),
@@ -11162,11 +11162,11 @@ do
 			Callback = function(v)
 				Cfg.OrbitTarget = v
 				local name = (type(v) == "table" and v[1] or v)
-				showNotification("实用工具", "Orbit target: " .. name)
+				showNotification("实用工具", "轨道目标：" .. name)
 			end,
 		})
 		UtilityLeftSection:AddSlider({
-			Name = "Orbit Speed",
+			Name = "环绕速度",
 			Flag = "OrbitSpeed",
 			Default = Cfg.OrbitSpeed,
 			Min = 1,
@@ -11176,7 +11176,7 @@ do
 			end,
 		})
 		UtilityLeftSection:AddSlider({
-			Name = "Orbit Radius",
+			Name = "环绕半径",
 			Flag = "OrbitRadius",
 			Default = Cfg.OrbitRadius,
 			Min = 5,
@@ -11186,7 +11186,7 @@ do
 			end,
 		})
 		UtilityLeftSection:AddSlider({
-			Name = "Orbit Height",
+			Name = "环绕高度",
 			Flag = "OrbitHeight",
 			Default = Cfg.OrbitHeight,
 			Min = -20,
@@ -11329,7 +11329,7 @@ do
 			Callback = function(v)
 				Cfg.CharSwapEnabled = v
 				setupKeybinds()
-				showNotification("实用工具", "快速切换："  .. (v and "ON" or "OFF"))
+				showNotification("实用工具", "快速切换："  .. (v and "开启" or "关闭"))
 			end,
 		})
 		local keyOptions = {
@@ -11437,17 +11437,17 @@ do
 	local LoopGotoSection = ExploitTab:DrawSection({ Name = "循环传送", Position = "right", EnableScrolling = true })
 
 	local function _LoopGoto_GetPlayerNames()
-		local names = { "closest" }
+		local names = { "最近" }
 		for _, p in ipairs(Players:GetPlayers()) do
 			if p ~= LocalPlayer then
 				table.insert(names, p.Name)
 			end
 		end
 		table.sort(names, function(a, b)
-			if a == "closest" then
+			if a == "最近" then
 				return true
 			end
-			if b == "closest" then
+			if b == "最近" then
 				return false
 			end
 			return a < b
@@ -12026,7 +12026,7 @@ do
 		end
 
 		ExploitSection:AddToggle({
-			Name = "Invisible",
+			Name = "隐身",
 			Flag = "Invisible",
 			Default = Cfg.Invisible,
 			Callback = function(state)
@@ -12138,17 +12138,17 @@ do
 		end
 
 		ExploitSection:AddToggle({
-			Name = "Anti Counter",
+			Name = "防反制",
 			Flag = "AntiCounter",
 			Default = Cfg.AntiCounter,
 			Callback = function(v)
 				Cfg.AntiCounter = v
 				if v then
 					initializeAntiCounter()
-					showNotification("功能", "Anti Counter: ON")
+					showNotification("功能", "反反制：开启")
 				else
 					countering = {}
-					showNotification("功能", "Anti Counter: OFF")
+					showNotification("功能", "反反制：关闭")
 				end
 			end,
 		})
@@ -12902,7 +12902,7 @@ do
 		-- Start visibility updates
 		antiSLConnection = RunService.RenderStepped:Connect(UpdatePlayerVisibility)
 
-		showNotification("服务器卡顿", "Anti Server Lagger: ON")
+		showNotification("服务器卡顿", "防卡服：开启")
 	end
 
 	local function stopAntiServerLagger()
@@ -12927,7 +12927,7 @@ do
 		-- Clear player cache
 		PlayerCache = {}
 
-		showNotification("服务器卡顿", "Anti Server Lagger: OFF")
+		showNotification("服务器卡顿", "防卡服：关闭")
 	end
 
 	ServerLaggerSection:AddToggle({
@@ -12945,14 +12945,14 @@ do
 	})
 end
 do
-	local CombatTab1 = DualTab1:DrawTab({ Name = "tab 1", Type = "Double", EnableScrolling = true })
-	local Section1 = CombatTab1:DrawSection({ Name = "Hitbox Controls", Position = "left", EnableScrolling = true })
+	local CombatTab1 = DualTab1:DrawTab({ Name = "判定框", Type = "Double", EnableScrolling = true })
+	local Section1 = CombatTab1:DrawSection({ Name = "判定框控制", Position = "left", EnableScrolling = true })
 	local Section2 = CombatTab1:DrawSection({ Name = "即时击杀", Position = "right", EnableScrolling = true })
-	local CombatTab2 = DualTab1:DrawTab({ Name = "tab 2", Type = "Double", EnableScrolling = true })
+	local CombatTab2 = DualTab1:DrawTab({ Name = "特殊技能", Type = "Double", EnableScrolling = true })
 	local SpecialSection1 = CombatTab2:DrawSection({ Name = "墙壁连击", Position = "left", EnableScrolling = true })
 	local SpecialSection2 = CombatTab2:DrawSection({ Name = "击杀动作", Position = "right", EnableScrolling = true })
-	local CombatTab3 = DualTab1:DrawTab({ Name = "Legit Kombat", Type = "Single", EnableScrolling = true })
-	local LegitKombatSection = CombatTab3:DrawSection({ Name = "Legit Kombat" })
+	local CombatTab3 = DualTab1:DrawTab({ Name = "合法战斗", Type = "Single", EnableScrolling = true })
+	local LegitKombatSection = CombatTab3:DrawSection({ Name = "合法战斗" })
 
 	local core, originalHitBox
 	pcall(function()
@@ -13070,7 +13070,7 @@ do
 	end
 
 	Section1:AddToggle({
-		Name = "Enable",
+		Name = "启用",
 		Flag = "HitboxToggle",
 		Default = Cfg.HitboxToggle,
 		Callback = function(v)
@@ -13079,7 +13079,7 @@ do
 		end,
 	})
 	local gurt = Section1:AddToggle({
-		Name = "Legitify",
+		Name = "合法化",
 		Flag = "HitboxLegitify",
 		Default = Cfg.HitboxLegitify,
 		Callback = function(v)
@@ -13092,11 +13092,11 @@ do
 		end,
 	})
 	local wownd = Section1:AddDropdown({
-		Name = "Method",
+		Name = "方法",
 		Flag = "HitboxMethod",
 		Default = Cfg.HitboxMethod,
 		Multi = false,
-		Values = { "Override", "Add" },
+		Values = { "覆盖", "叠加" },
 		Callback = function(v)
 			Cfg.HitboxMethod = v
 			getgenv().HitboxMethod = (type(v) == "table" and v[1] or v)
@@ -13107,7 +13107,7 @@ do
 		end,
 	})
 	gurt.Link:AddHelper({
-		Text = "wil make techs that are normally possible with hitbox expander become impossible, recommended for legit cheaters.",
+		Text = "会让判定框扩展器通常可行的操作变得不可能，推荐给想要看起来合法的玩家使用。",
 	})
 
 	do
@@ -13472,17 +13472,17 @@ do
 			end
 
 			-- Sort targets based on selection mode
-			if selectionMode == "Closest" then
+			if selectionMode == "最近" then
 				table.sort(targets, function(a, b)
 					return a.distance < b.distance
 				end)
 				return { targets[1] }
-			elseif selectionMode == "Lowest" then
+			elseif selectionMode == "最低血量" then
 				table.sort(targets, function(a, b)
 					return a.health < b.health
 				end)
 				return { targets[1] }
-			elseif selectionMode == "All-in-range" then
+			elseif selectionMode == "范围内全部" then
 				return targets
 			end
 
@@ -13498,7 +13498,7 @@ do
 				type(Cfg.InstantKillTargetSelection) == "table" and Cfg.InstantKillTargetSelection[1]
 			)
 				or Cfg.InstantKillTargetSelection
-				or "Closest"
+				or "最近"
 			local targets = getTargets(targetSelection, Cfg.InstantKillIgnoreFriends, getgenv().InstantKillRange)
 
 			for _, targetData in ipairs(targets) do
@@ -13557,7 +13557,7 @@ do
 
 					local spammerMode = (type(Cfg.InstantKillMode) == "table" and Cfg.InstantKillMode[1])
 						or Cfg.InstantKillMode
-					if spammerMode == "Spam" then
+					if spammerMode == "连发" then
 						spamming = true
 						task.spawn(function()
 							while spamming and dashActive do
@@ -13580,7 +13580,7 @@ do
 							and spammerKeybind ~= "NIL"
 							and input.KeyCode.Name == spammerKeybind
 						then
-							if spammerMode == "Spam" then
+							if spammerMode == "连发" then
 								spamming = not spamming
 								if spamming then
 									task.spawn(function()
@@ -13617,7 +13617,7 @@ do
 			Flag = "InstantKillMode",
 			Default = Cfg.InstantKillMode,
 			Multi = false,
-			Values = { "Manual", "Spam" },
+			Values = { "手动", "连发" },
 			Callback = function(v)
 				Cfg.InstantKillMode = v
 			end,
@@ -13627,7 +13627,7 @@ do
 			Flag = "InstantKillTargetSelection",
 			Default = Cfg.InstantKillTargetSelection,
 			Multi = false,
-			Values = { "Closest", "Lowest", "All-in-range" },
+			Values = { "最近", "最低血量", "范围内全部" },
 			Callback = function(v)
 				Cfg.InstantKillTargetSelection = v
 			end,
@@ -13862,12 +13862,12 @@ do
 		end)
 
 		Section2:AddParagraph({
-			Title = "Kill Farming",
-			Content = "enable, sit back n relax",
+			Title = "刷杀",
+			Content = "开启后坐等刷杀即可",
 		})
 
 		Section2:AddToggle({
-			Name = "Kill Farming",
+			Name = "刷杀",
 			Flag = "KillFarming",
 			Default = Cfg.KillFarming,
 			Callback = function(v)
@@ -13956,7 +13956,7 @@ do
 				wallComboConnection = nil
 			end
 			local wallComboMode = (type(Cfg.WallComboMode) == "table" and Cfg.WallComboMode[1]) or Cfg.WallComboMode
-			if Cfg.WallCombo and wallComboMode == "Spam" then
+			if Cfg.WallCombo and wallComboMode == "连发" then
 				wallComboSpamming = true
 				wallComboConnection = RunService.Heartbeat:Connect(function()
 					if wallComboSpamming then
@@ -13977,12 +13977,12 @@ do
 				and input.KeyCode.Name == wallComboKeybind
 				and Cfg.WallCombo
 			then
-				if wallComboMode == "Spam" then
+				if wallComboMode == "连发" then
 					wallComboSpamming = not wallComboSpamming
 					if wallComboSpamming and (not wallComboConnection or not wallComboConnection.Connected) then
 						updateWallComboSpam()
 					end
-				elseif wallComboMode == "Manual" then
+				elseif wallComboMode == "手动" then
 					wallcomboveryud()
 				end
 			end
@@ -14001,7 +14001,7 @@ do
 			Default = Cfg.WallComboMode,
 			Multi = false,
 			Flag = "WallComboMode",
-			Values = { "Manual", "Spam" },
+			Values = { "手动", "连发" },
 			Callback = function(v)
 				Cfg.WallComboMode = v
 				updateWallComboSpam()
@@ -14012,7 +14012,7 @@ do
 			Default = Cfg.WallComboTargetSelection,
 			Multi = false,
 			Flag = "WallComboTargetSelection",
-			Values = { "Closest", "Lowest" },
+			Values = { "最近", "最低血量" },
 			Callback = function(v)
 				Cfg.WallComboTargetSelection = v
 			end,
@@ -14100,14 +14100,14 @@ do
 						type(Cfg.KillEmoteTargetSelection) == "table" and Cfg.KillEmoteTargetSelection[1]
 					)
 						or Cfg.KillEmoteTargetSelection
-						or "Closest"
+						or "最近"
 
-					if targetSelection == "Closest" then
+					if targetSelection == "最近" then
 						if distance < shortestDistance then
 							shortestDistance = distance
 							closestTarget = player.Character
 						end
-					elseif targetSelection == "Lowest" then
+					elseif targetSelection == "最低血量" then
 						local humanoid = player.Character:FindFirstChild("Humanoid")
 						if humanoid then
 							local health = humanoid:GetAttribute("Health") or humanoid.Health or 0
@@ -14157,8 +14157,8 @@ do
 				or Cfg.KillEmoteSelection
 
 			if selectedKeybind and input.KeyCode == selectedKeybind and Cfg.KillEmoteEnabled then
-				if killEmoteType == "Spam" then
-					if killEmoteMode == "Randomized" then
+				if killEmoteType == "连发" then
+					if killEmoteMode == "随机" then
 						isAuraMode = not isAuraMode
 						isSpammingSelectedEmote = false
 					else
@@ -14166,7 +14166,7 @@ do
 						isAuraMode = false
 					end
 				else
-					if killEmoteMode == "Randomized" then
+					if killEmoteMode == "随机" then
 						useRandomEmote()
 					elseif selectedEmote and selectedEmote ~= "" then
 						useEmote(selectedEmote)
@@ -14249,7 +14249,7 @@ do
 			Default = Cfg.KillEmoteMode,
 			Multi = false,
 			Flag = "KillEmoteMode",
-			Values = { "Selected", "Randomized" },
+			Values = { "指定", "随机" },
 			Callback = function(v)
 				Cfg.KillEmoteMode = v
 				isAuraMode, isSpammingSelectedEmote = false, false
@@ -14264,7 +14264,7 @@ do
 			Default = Cfg.KillEmoteTargetSelection,
 			Multi = false,
 			Flag = "KillEmoteTargetSelection",
-			Values = { "Closest", "Lowest" },
+			Values = { "最近", "最低血量" },
 			Callback = function(v)
 				Cfg.KillEmoteTargetSelection = v
 			end,
@@ -14283,14 +14283,14 @@ do
 			Default = Cfg.KillEmoteType,
 			Multi = false,
 			Flag = "KillEmoteType",
-			Values = { "Manual", "Spam" },
+			Values = { "手动", "连发" },
 			Callback = function(v)
 				Cfg.KillEmoteType = v
 				isAuraMode, isSpammingSelectedEmote = false, false
 				local killEmoteType = (type(v) == "table" and v[1]) or v
 				local killEmoteMode = (type(Cfg.KillEmoteMode) == "table" and Cfg.KillEmoteMode[1]) or Cfg.KillEmoteMode
-				if killEmoteType == "Spam" then
-					if killEmoteMode == "Randomized" then
+				if killEmoteType == "连发" then
+					if killEmoteMode == "随机" then
 						isAuraMode = true
 					else
 						isSpammingSelectedEmote = true
@@ -14795,8 +14795,8 @@ do
 	UISettingsSection:AddDropdown({
 		Name = "选择主题",
 		Flag = "SelectTheme",
-		Default = "Default",
-		Values = { "Default", "Dark Green", "Dark Blue", "Purple Rose", "Skeet" },
+		Default = "默认",
+		Values = { "默认", "暗绿", "暗蓝", "紫玫瑰", "Skeet" },
 		Callback = function(v)
 			Compkiller:SetTheme(v)
 		end,
@@ -14808,7 +14808,7 @@ repeat
 	task.wait(2)
 until init7
 local ConfigUI = Window:DrawConfig({
-	Name = "Config",
+	Name = "配置",
 	Icon = "settings",
 	Config = ConfigManager,
 })
