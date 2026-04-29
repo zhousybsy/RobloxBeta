@@ -9891,7 +9891,7 @@ getgenv().TeraphyHubConfig = {
 	EnhancerMultiplier = 0,
 	InstantKill = false,
 	InstantKillKeybind = "NIL",
-	InstantKillMode = { "手动" },
+	InstantKillMode = { "连发" },
 	InstantKillTargetSelection = { "最近" },
 	InstantKillIgnoreFriends = false,
 	ShowRangeCircle = false,
@@ -13531,7 +13531,21 @@ do
 			end
 
 			if index > 1 then
-				local CurrentWallCombo = ReplicatedStorage.Characters[LocalPlayer.Data.Character.Value].WallCombo
+				-- 修复：安全访问Data，避免nil错误导致循环静默中断
+				local charData = LocalPlayer:FindFirstChild("Data")
+				local charValue = charData and charData:FindFirstChild("Character") and charData.Character.Value
+				if not charValue then
+					for key in pairs(PlayersList) do PlayersList[key] = nil end
+					index = 1
+					return
+				end
+				local charFolder = ReplicatedStorage.Characters:FindFirstChild(charValue)
+				if not charFolder then
+					for key in pairs(PlayersList) do PlayersList[key] = nil end
+					index = 1
+					return
+				end
+				local CurrentWallCombo = charFolder.WallCombo
 				ReplicatedStorage.Remotes.Abilities.Ability:FireServer(CurrentWallCombo, 69)
 				game.ReplicatedStorage.Remotes.Combat.Action:FireServer(
 					CurrentWallCombo,
@@ -13581,7 +13595,9 @@ do
 						spamming = true
 						task.spawn(function()
 							while spamming and dashActive do
-								local currentChar = LocalPlayer.Data.Character.Value
+								-- 修复：安全访问Data
+								local charData = LocalPlayer:FindFirstChild("Data")
+								local currentChar = charData and charData:FindFirstChild("Character") and charData.Character.Value
 								local killCount = (currentChar == "Gon") and 20 or 50
 								KillAura(killCount)
 								task.wait(0.1)
@@ -13605,7 +13621,9 @@ do
 								if spamming then
 									task.spawn(function()
 										while spamming and dashActive do
-											local currentChar = LocalPlayer.Data.Character.Value
+											-- 修复：安全访问Data
+											local charData = LocalPlayer:FindFirstChild("Data")
+											local currentChar = charData and charData:FindFirstChild("Character") and charData.Character.Value
 											local killCount = (currentChar == "Gon") and 20 or 50
 											KillAura(killCount)
 											task.wait(0.1)
@@ -13613,7 +13631,9 @@ do
 									end)
 								end
 							else
-								local currentChar = LocalPlayer.Data.Character.Value
+								-- 修复：安全访问Data
+								local charData = LocalPlayer:FindFirstChild("Data")
+								local currentChar = charData and charData:FindFirstChild("Character") and charData.Character.Value
 								local killCount = (currentChar == "Gon") and 20 or 50
 								KillAura(killCount)
 							end
@@ -13842,15 +13862,11 @@ do
 				originalCameraType = cam.CameraType
 			end
 			farmConnection = RunService.Heartbeat:Connect(farmLoop)
-			-- 优化：独立循环降频，避免每帧都执行重操作
-			task.spawn(function()
-				while Cfg.KillFarming do
-					lpdash()
-					local currentChar = LocalPlayer.Data and LocalPlayer.Data.Character and LocalPlayer.Data.Character.Value
-					local killCount = (currentChar == "Gon") and 20 or 50
-					KillAura(killCount)
-					task.wait(0.05)
-				end
+			killAuraConnection = RunService.Heartbeat:Connect(function()
+				lpdash()
+				local currentChar = LocalPlayer.Data and LocalPlayer.Data.Character and LocalPlayer.Data.Character.Value
+				local killCount = (currentChar == "Gon") and 20 or 50
+				KillAura(killCount)
 			end)
 		end
 
@@ -13982,13 +13998,10 @@ do
 			local wallComboMode = (type(Cfg.WallComboMode) == "table" and Cfg.WallComboMode[1]) or Cfg.WallComboMode
 			if Cfg.WallCombo and wallComboMode == "连发" then
 				wallComboSpamming = true
-				-- 优化：用task.spawn独立循环，避免Heartbeat内task.wait堆积协程
-				task.spawn(function()
-					while wallComboSpamming and Cfg.WallCombo do
+				wallComboConnection = RunService.Heartbeat:Connect(function()
+					if wallComboSpamming then
 						wallcomboveryud()
-						task.wait(Cfg.WallComboDelay)
 					end
-					wallComboSpamming = false
 				end)
 			end
 		end
