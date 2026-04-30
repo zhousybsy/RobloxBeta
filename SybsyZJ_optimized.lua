@@ -13861,7 +13861,12 @@ do
 				originalCameraSubject = cam.CameraSubject
 				originalCameraType = cam.CameraType
 			end
-			farmConnection = RunService.Heartbeat:Connect(farmLoop)
+			-- 修复：farmLoop含task.wait不能放Heartbeat，改用独立循环
+			farmConnection = task.spawn(function()
+				while Cfg.KillFarming do
+					farmLoop()
+				end
+			end)
 			killAuraConnection = RunService.Heartbeat:Connect(function()
 				lpdash()
 				local currentChar = LocalPlayer.Data and LocalPlayer.Data.Character and LocalPlayer.Data.Character.Value
@@ -13875,10 +13880,8 @@ do
 				return
 			end
 			Cfg.KillFarming = false
-			if farmConnection then
-				farmConnection:Disconnect()
-				farmConnection = nil
-			end
+			-- farmConnection是task.spawn协程，靠Cfg.KillFarming=false让它自然退出
+			farmConnection = nil
 			if killAuraConnection then
 				killAuraConnection:Disconnect()
 				killAuraConnection = nil
@@ -13991,17 +13994,20 @@ do
 		end
 		local wallComboSpamming = false
 		local function updateWallComboSpam()
-			if wallComboConnection then
-				wallComboConnection:Disconnect()
-				wallComboConnection = nil
-			end
+			-- 先停止旧的
+			wallComboSpamming = false
+			-- wallComboConnection现在是协程，靠wallComboSpamming=false让它自然退出
+			wallComboConnection = nil
 			local wallComboMode = (type(Cfg.WallComboMode) == "table" and Cfg.WallComboMode[1]) or Cfg.WallComboMode
 			if Cfg.WallCombo and wallComboMode == "连发" then
 				wallComboSpamming = true
-				wallComboConnection = RunService.Heartbeat:Connect(function()
-					if wallComboSpamming then
+				-- 用task.spawn独立循环，靠wallComboSpamming控制退出，速度不变
+				wallComboConnection = task.spawn(function()
+					while wallComboSpamming and Cfg.WallCombo do
 						wallcomboveryud()
+						task.wait(Cfg.WallComboDelay)
 					end
+					wallComboSpamming = false
 				end)
 			end
 		end
@@ -14389,6 +14395,9 @@ do
 		local vfx = scanner("vfx")
 
 		function runAttack(p_u_105, p_u_106, p107, p108)
+			-- 修复：用唯一ID标识本次调用，新攻击触发时旧循环自动退出
+			getgenv()._runAttackCallId = (getgenv()._runAttackCallId or 0) + 1
+			local _myCallId = getgenv()._runAttackCallId
 			local v_u_1 = require(game.ReplicatedStorage:WaitForChild("Core"))
 			local v109 = v_u_1.Services.Camera.CFrame
 			local v110 = os.clock()
@@ -14488,7 +14497,8 @@ do
 				return v158
 			end
 
-			while true do
+			-- 修复：LegitKombat关闭 或 有新的攻击调用时，旧循环自动退出
+			while getgenv().LegitKombatEnabled and getgenv()._runAttackCallId == _myCallId do
 				task.wait()
 				local v160 = v_u_1.Services.Camera.CFrame
 				local _, v161, _ = v109:ToOrientation()
