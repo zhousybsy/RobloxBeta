@@ -13531,21 +13531,7 @@ do
 			end
 
 			if index > 1 then
-				-- 修复：安全访问Data，避免nil错误导致循环静默中断
-				local charData = LocalPlayer:FindFirstChild("Data")
-				local charValue = charData and charData:FindFirstChild("Character") and charData.Character.Value
-				if not charValue then
-					for key in pairs(PlayersList) do PlayersList[key] = nil end
-					index = 1
-					return
-				end
-				local charFolder = ReplicatedStorage.Characters:FindFirstChild(charValue)
-				if not charFolder then
-					for key in pairs(PlayersList) do PlayersList[key] = nil end
-					index = 1
-					return
-				end
-				local CurrentWallCombo = charFolder.WallCombo
+				local CurrentWallCombo = ReplicatedStorage.Characters[LocalPlayer.Data.Character.Value].WallCombo
 				ReplicatedStorage.Remotes.Abilities.Ability:FireServer(CurrentWallCombo, 69)
 				game.ReplicatedStorage.Remotes.Combat.Action:FireServer(
 					CurrentWallCombo,
@@ -13595,9 +13581,7 @@ do
 						spamming = true
 						task.spawn(function()
 							while spamming and dashActive do
-								-- 修复：安全访问Data
-								local charData = LocalPlayer:FindFirstChild("Data")
-								local currentChar = charData and charData:FindFirstChild("Character") and charData.Character.Value
+								local currentChar = LocalPlayer.Data.Character.Value
 								local killCount = (currentChar == "Gon") and 20 or 50
 								KillAura(killCount)
 								task.wait(0.1)
@@ -13621,9 +13605,7 @@ do
 								if spamming then
 									task.spawn(function()
 										while spamming and dashActive do
-											-- 修复：安全访问Data
-											local charData = LocalPlayer:FindFirstChild("Data")
-											local currentChar = charData and charData:FindFirstChild("Character") and charData.Character.Value
+											local currentChar = LocalPlayer.Data.Character.Value
 											local killCount = (currentChar == "Gon") and 20 or 50
 											KillAura(killCount)
 											task.wait(0.1)
@@ -13631,9 +13613,7 @@ do
 									end)
 								end
 							else
-								-- 修复：安全访问Data
-								local charData = LocalPlayer:FindFirstChild("Data")
-								local currentChar = charData and charData:FindFirstChild("Character") and charData.Character.Value
+								local currentChar = LocalPlayer.Data.Character.Value
 								local killCount = (currentChar == "Gon") and 20 or 50
 								KillAura(killCount)
 							end
@@ -14001,6 +13981,7 @@ do
 				wallComboConnection = RunService.Heartbeat:Connect(function()
 					if wallComboSpamming then
 						wallcomboveryud()
+						task.wait(Cfg.WallComboDelay)
 					end
 				end)
 			end
@@ -14842,6 +14823,105 @@ do
 		Values = { "Default", "Dark Green", "Dark Blue", "Purple Rose", "Skeet" },
 		Callback = function(v)
 			Compkiller:SetTheme(v)
+		end,
+	})
+
+	-- 还原按钮：关闭所有功能并把游戏状态恢复原样
+	local RestoreSection = UISettingsTab:DrawSection({ Name = "还原" })
+	RestoreSection:AddButton({
+		Name = "一键还原",
+		Callback = function()
+			-- 1. 关闭所有开关
+			local flags = {
+				"HitboxToggle", "HitboxVisualizer", "ShowRangeCircle",
+				"InstantKill", "WallCombo", "KillFarming",
+				"SpeedHack", "FlyNoclip", "Invisible",
+				"RainbowAura", "EnableTrails", "RainbowTrail",
+				"EnableCharSwap", "AmbientToggle", "OutdoorAmbientToggle",
+				"AutoBlock", "ScrambledPing", "SuperKnockback",
+				"NoStun", "LongerUltimate", "InstantRespawn",
+				"VoidKill", "FastHits", "AutoRagdoll",
+				"ServerLaggerMethod1", "ServerLaggerMethod2", "AntiServerLagger",
+				"GodMode1", "GodMode2", "Enhancer",
+				"KillFarming", "DashPatcherToggle", "EnableKillEmote",
+			}
+			for _, flag in ipairs(flags) do
+				local element = Compkiller:GetFlag(flag)
+				if element and element.Set then
+					pcall(element.Set, element, false)
+				end
+			end
+
+			-- 2. 关闭所有RunService连接
+			local connections = {
+				"speedConnection", "rainbowAuraConnection", "antiSLConnection",
+				"rangeUpdateConnection", "wallComboConnection", "farmConnection",
+				"killAuraConnection", "method2Connection", "movementConnection",
+				"killEmoteHeartbeatConn",
+			}
+			for _, name in ipairs(connections) do
+				local conn = getgenv()[name]
+				if conn and typeof(conn) == "RBXScriptConnection" then
+					pcall(conn.Disconnect, conn)
+					getgenv()[name] = nil
+				end
+			end
+
+			-- 3. 还原角色状态
+			local char = game.Players.LocalPlayer.Character
+			if char then
+				local hum = char:FindFirstChildOfClass("Humanoid")
+				local hrp = char:FindFirstChild("HumanoidRootPart")
+				if hum then
+					pcall(function()
+						hum:SetStateEnabled(Enum.HumanoidStateType.Flying, false)
+						hum.PlatformStand = false
+					end)
+				end
+				-- 还原所有部件的Anchored和CanCollide
+				for _, part in ipairs(char:GetDescendants()) do
+					if part:IsA("BasePart") then
+						pcall(function()
+							part.Anchored = false
+							part.CanCollide = true
+						end)
+					end
+				end
+				-- 还原碰撞组
+				if hrp then
+					pcall(function()
+						hrp.CollisionGroup = "Characters"
+					end)
+				end
+			end
+
+			-- 4. 还原镜头
+			local cam = workspace.CurrentCamera
+			if cam then
+				pcall(function()
+					cam.CameraType = Enum.CameraType.Custom
+					if char and char:FindFirstChildOfClass("Humanoid") then
+						cam.CameraSubject = char:FindFirstChildOfClass("Humanoid")
+					end
+				end)
+			end
+
+			-- 5. 还原Lighting
+			pcall(function()
+				game:GetService("Lighting").Ambient = Color3.fromRGB(70, 70, 70)
+				game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(140, 140, 140)
+			end)
+
+			-- 6. 还原getgenv状态
+			getgenv().HitboxEnabled = false
+			getgenv().HitboxLegitify = false
+			getgenv().LegitKombatEnabled = false
+			getgenv().Size1 = 0
+			getgenv().Size2 = 0
+			getgenv().Size3 = 0
+			getgenv()._runAttackCallId = nil
+
+			showNotification("还原", "已还原所有游戏状态！")
 		end,
 	})
 	init7 = true
