@@ -2,9 +2,9 @@ local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/rel
 local Confirmed = false
 
 WindUI:Popup({
-    Title = "大司马脚本付费版 V2",
+    Title = "Sybsy脚本",
     IconThemed = true,
-    Content = "尊贵的用户" .. game.Players.LocalPlayer.Name .. "使用大司马脚本",
+    Content = "尊贵的用户" .. game.Players.LocalPlayer.Name .. "使用Sybsy脚本",
     Buttons = {
         {
             Title = "取消",
@@ -25,9 +25,9 @@ WindUI:Popup({
 
 function createUI()
     local Window = WindUI:CreateWindow({
-        Title = "大司马脚本",
+        Title = "Sybsy脚本",
         Icon = "palette",
-        Author = "尊贵的"..game.Players.LocalPlayer.Name.."欢迎使用大司马脚本", 
+        Author = "狡猾的"..game.Players.LocalPlayer.Name.."欢迎使用Sybsy脚本", 
         Folder = "Premium",
         Size = UDim2.fromOffset(550, 320),
         Theme = "Light",
@@ -42,17 +42,17 @@ function createUI()
     })
 
     Window:Tag({
-        Title = "doors",
+        Title = "Doors",
         Color = Color3.fromHex("#00ffff") 
     })
     
     Window:Tag({
-        Title = "未完善",
+        Title = "V2",
         Color = Color3.fromHex("#00ffff") 
     })
 
     Window:EditOpenButton({
-        Title = "大司马脚本付费版V2",
+        Title = "Sybsy",
         Icon = "crown",
         CornerRadius = UDim.new(0, 8),
         StrokeThickness = 3,
