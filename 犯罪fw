@@ -1,6 +1,6 @@
 local MainWindow = loadstring(game:HttpGet("https://sirius.menu/rayfield"))():CreateWindow({
     Name = "Sybsy制作",
-    LoadingTitle = "Rayfield 界面套件",
+    LoadingTitle = "犯罪范围Beta",
     LoadingSubtitle = "作者：Sybsy",
     ConfigurationSaving = {
         Enabled = true,
